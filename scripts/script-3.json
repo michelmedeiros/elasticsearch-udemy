@@ -1,0 +1,90 @@
+curl -X PUT "localhost:9200/shakespeare_ngram" -H 'Content-Type: application/json' -d'
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "my_analyzer": {
+          "tokenizer": "my_tokenizer"
+        }
+      },
+      "tokenizer": {
+        "my_tokenizer": {
+          "type": "ngram",
+          "min_gram": 3,
+          "max_gram": 3,
+          "token_chars": [
+            "letter",
+            "digit"
+          ]
+        }
+      }
+    }
+  }
+},
+   "mappings":{
+      "_doc":{
+         "properties":{
+            "line_id":{
+               "type":"long"
+            },
+            "line_number":{
+               "type":"text",
+               "fields":{
+                  "keyword":{
+                     "type":"keyword",
+                     "ignore_above":256
+                  }
+               }
+            },
+            "play_name":{
+               "type":"text",
+               "analyzer":"my_analyzer",
+               "fields":{
+                  "keyword":{
+                     "type":"keyword",
+                     "ignore_above":256
+                  }
+               }
+            },
+            "speaker":{
+               "type":"text",
+               "analyzer":"my_analyzer",
+               "fields":{
+                  "keyword":{
+                     "type":"keyword",
+                     "ignore_above":256
+                  }
+               }
+            },
+            "speech_number":{
+               "type":"text",
+               "fields":{
+                  "keyword":{
+                     "type":"keyword",
+                     "ignore_above":256
+                  }
+               }
+            },
+            "text_entry":{
+               "type":"text",
+               "analyzer":"my_analyzer",
+               "fields":{
+                  "keyword":{
+                     "type":"keyword",
+                     "ignore_above":256
+                  }
+               }
+            },
+            "type":{
+               "type":"text",
+               "fields":{
+                  "keyword":{
+                     "type":"keyword",
+                     "ignore_above":256
+                  }
+               }
+            }
+         }
+      }
+   }
+}'
